@@ -1,0 +1,3 @@
+[submodule "odoo-CoreInventory"]
+	path = odoo-CoreInventory
+	url = https://github.com/yashajagiya/odoo-CoreInventory
