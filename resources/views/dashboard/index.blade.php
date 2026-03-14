@@ -3,6 +3,16 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="h4 mb-0 text-gray-800 fw-bold">Dashboard Overview</h2>
+    <form method="GET" action="{{ route('dashboard') }}" class="d-flex gap-2">
+        <select name="location_id" class="form-select" onchange="this.form.submit()">
+            <option value="">All Locations</option>
+            @foreach($locations as $loc)
+                <option value="{{ $loc->id }}" {{ isset($locationId) && $locationId == $loc->id ? 'selected' : '' }}>
+                    {{ $loc->name }}
+                </option>
+            @endforeach
+        </select>
+    </form>
 </div>
 
 <div class="row g-4 mb-4">

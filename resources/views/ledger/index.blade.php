@@ -46,7 +46,7 @@
                             <span class="text-muted">{{ $ledger->quantity_change }}</span>
                         @endif
                     </td>
-                    <td><span class="badge bg-light text-dark border">{{ $ledger->reference_type }}</span></td>
+                    <td><span class="badge bg-light text-dark border">{{ class_basename($ledger->reference_type) }}</span></td>
                 </tr>
                 @empty
                 <tr>

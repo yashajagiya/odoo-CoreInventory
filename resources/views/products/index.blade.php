@@ -9,35 +9,20 @@
 <div class="card border-0 shadow-sm mb-4">
     <div class="card-body bg-white rounded">
         <form method="GET" action="{{ route('products.index') }}" class="row g-3">
-            <div class="col-md-3">
-                <label class="form-label text-muted small fw-bold">Search by SKU</label>
-                <input type="text" name="sku" class="form-control" placeholder="SKU..." value="{{ request('sku') }}">
+            <div class="col-md-6">
+                <label class="form-label text-muted small fw-bold">Search (Name / SKU)</label>
+                <input type="text" name="search" class="form-control" placeholder="Search products..." value="{{ request('search') }}">
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <label class="form-label text-muted small fw-bold">Category</label>
                 <select name="category" class="form-select">
                     <option value="">All Categories</option>
-                    <option value="Raw Materials" {{ request('category') == 'Raw Materials' ? 'selected' : '' }}>Raw Materials</option>
-                    <option value="Finished Goods" {{ request('category') == 'Finished Goods' ? 'selected' : '' }}>Finished Goods</option>
+                    @foreach($categories as $cat)
+                        <option value="{{ $cat }}" {{ request('category') == $cat ? 'selected' : '' }}>{{ $cat }}</option>
+                    @endforeach
                 </select>
             </div>
-            <div class="col-md-3">
-                <label class="form-label text-muted small fw-bold">Document Type</label>
-                <select name="document_type" class="form-select">
-                    <option value="">All Types</option>
-                    <option value="Consumable" {{ request('document_type') == 'Consumable' ? 'selected' : '' }}>Consumable</option>
-                    <option value="Storable" {{ request('document_type') == 'Storable' ? 'selected' : '' }}>Storable</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label class="form-label text-muted small fw-bold">Status</label>
-                <select name="status" class="form-select">
-                    <option value="">All Statuses</option>
-                    <option value="Active" {{ request('status') == 'Active' ? 'selected' : '' }}>Active</option>
-                    <option value="Archived" {{ request('status') == 'Archived' ? 'selected' : '' }}>Archived</option>
-                </select>
-            </div>
-            <div class="col-md-1 d-flex align-items-end">
+            <div class="col-md-2 d-flex align-items-end">
                 <button type="submit" class="btn btn-secondary w-100">Filter</button>
             </div>
         </form>
@@ -60,8 +45,8 @@
             <tbody>
                 @forelse($products as $product)
                 <tr class="{{ $product->total_stock < $product->reorder_level ? 'table-danger text-danger' : '' }}">
-                    <td class="ps-4 fw-bold">{{ $product->sku }}</td>
-                    <td>{{ $product->name }}</td>
+                    <td class="ps-4 fw-bold"><a href="{{ route('products.show', $product->id) }}">{{ $product->sku }}</a></td>
+                    <td><a href="{{ route('products.show', $product->id) }}">{{ $product->name }}</a></td>
                     <td><span class="badge bg-secondary">{{ $product->category }}</span></td>
                     <td>{{ $product->unit_of_measure }}</td>
                     <td class="fw-bold">{{ $product->total_stock }}</td>

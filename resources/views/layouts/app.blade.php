@@ -32,7 +32,9 @@
                 <a href="{{ route('transfers.index') }}">Internal Transfers</a>
                 <a href="{{ route('adjustments.index') }}">Inventory Adjustment</a>
                 <a href="{{ route('ledger.index') }}">Move History</a>
-                <a href="{{ route('settings.index') }}">Warehouse Settings</a>
+                @if(auth()->check() && in_array(strtolower(auth()->user()->role), ['manager', 'admin']))
+                    <a href="{{ route('settings.index') }}">Warehouse Settings</a>
+                @endif
                 <a href="{{ route('profile.index') }}">My Profile</a>
                 <hr class="text-secondary mx-3">
                 <form action="{{ route('logout') }}" method="POST" class="d-inline m-0 p-0">
@@ -51,9 +53,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const currentUrl = window.location.href;
+            const currentPath = window.location.pathname;
             document.querySelectorAll('.sidebar a').forEach(link => {
-                if(currentUrl.includes(link.getAttribute('href'))) {
+                const linkPath = new URL(link.getAttribute('href'), window.location.origin).pathname;
+                if (linkPath === '/' && (currentPath === '/' || currentPath === '/dashboard')) {
+                    link.classList.add('active');
+                } else if (linkPath !== '/' && currentPath.startsWith(linkPath)) {
                     link.classList.add('active');
                 }
             });

@@ -9,21 +9,21 @@
 <div class="card border-0 shadow-sm mb-4">
     <div class="card-body">
         <form method="GET" action="{{ route('adjustments.index') }}" class="row g-3">
-            <div class="col-md-3">
-                <label class="form-label text-muted small fw-bold">Search SKU / Ref</label>
-                <input type="text" name="sku" class="form-control" value="{{ request('sku') }}">
+            <div class="col-md-7">
+                <label class="form-label text-muted small fw-bold">Search (SKU)</label>
+                <input type="text" name="sku" class="form-control" placeholder="Product SKU..." value="{{ request('sku') }}">
             </div>
-            <div class="col-md-3"><label class="form-label text-muted small">Doc Type</label><select name="document_type" class="form-select"><option value="">All</option></select></div>
-            <div class="col-md-3"><label class="form-label text-muted small">Category</label><select name="category" class="form-select"><option value="">All</option></select></div>
-            <div class="col-md-2">
-                <label class="form-label text-muted small">Status</label>
+            <div class="col-md-3">
+                <label class="form-label text-muted small fw-bold">Status</label>
                 <select name="status" class="form-select">
-                    <option value="">All</option>
+                    <option value="">All Statuses</option>
                     <option value="Draft" {{ request('status') == 'Draft' ? 'selected' : '' }}>Draft</option>
                     <option value="Done" {{ request('status') == 'Done' ? 'selected' : '' }}>Done</option>
                 </select>
             </div>
-            <div class="col-md-1 d-flex align-items-end"><button type="submit" class="btn btn-secondary w-100">Filter</button></div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-secondary w-100">Filter</button>
+            </div>
         </form>
     </div>
 </div>
@@ -34,7 +34,7 @@
             <tr>
                 <th class="ps-4">Reference</th>
                 <th>Location</th>
-                <th>Date</th>
+                <th>Product</th>
                 <th>Status</th>
                 <th>Actions</th>
             </tr>
@@ -42,9 +42,9 @@
         <tbody>
             @foreach($adjustments as $adjustment)
             <tr>
-                <td class="ps-4 fw-bold">{{ $adjustment->reference }}</td>
+                <td class="ps-4 fw-bold">{{ $adjustment->reference_no }}</td>
                 <td>{{ $adjustment->location->name ?? 'N/A' }}</td>
-                <td>{{ $adjustment->created_at->format('Y-m-d') }}</td>
+                <td>{{ $adjustment->product->name ?? 'N/A' }}</td>
                 <td><span class="badge badge-{{ strtolower($adjustment->status) }}">{{ $adjustment->status }}</span></td>
                 <td><a href="{{ route('adjustments.show', $adjustment->id) }}" class="btn btn-sm btn-outline-primary">View</a></td>
             </tr>

@@ -9,20 +9,13 @@
 <div class="card border-0 shadow-sm mb-4">
     <div class="card-body bg-white rounded">
         <form method="GET" action="{{ route('receipts.index') }}" class="row g-3">
-            <div class="col-md-3">
-                <label class="form-label text-muted small fw-bold">Search SKU / Ref</label>
-                <input type="text" name="sku" class="form-control" placeholder="Search..." value="{{ request('sku') }}">
+            <div class="col-md-4">
+                <label class="form-label text-muted small fw-bold">Search (SKU)</label>
+                <input type="text" name="sku" class="form-control" placeholder="Product SKU..." value="{{ request('sku') }}">
             </div>
             <div class="col-md-3">
-                <label class="form-label text-muted small fw-bold">Document Type</label>
-                <select name="document_type" class="form-select">
-                    <option value="">All</option>
-                    <option value="Vendor" {{ request('document_type') == 'Vendor' ? 'selected' : '' }}>Vendor</option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <label class="form-label text-muted small fw-bold">Category</label>
-                <select name="category" class="form-select"><option value="">All</option></select>
+                <label class="form-label text-muted small fw-bold">Vendor Name</label>
+                <input type="text" name="vendor_name" class="form-control" placeholder="Search vendor..." value="{{ request('vendor_name') }}">
             </div>
             <div class="col-md-2">
                 <label class="form-label text-muted small fw-bold">Status</label>
@@ -47,8 +40,8 @@
         <thead class="table-light">
             <tr>
                 <th class="ps-4">Reference</th>
-                <th>Partner</th>
-                <th>Date</th>
+                <th>Vendor</th>
+                <th>Expected Date</th>
                 <th>Status</th>
                 <th>Actions</th>
             </tr>
@@ -56,9 +49,9 @@
         <tbody>
             @foreach($receipts as $receipt)
             <tr>
-                <td class="ps-4 fw-bold">{{ $receipt->reference }}</td>
-                <td>{{ $receipt->partner_name }}</td>
-                <td>{{ $receipt->scheduled_date }}</td>
+                <td class="ps-4 fw-bold">{{ $receipt->reference_no }}</td>
+                <td>{{ $receipt->vendor_name ?? 'N/A' }}</td>
+                <td>{{ $receipt->expected_date ? \Carbon\Carbon::parse($receipt->expected_date)->format('Y-m-d') : 'N/A' }}</td>
                 <td><span class="badge badge-{{ strtolower($receipt->status) }}">{{ $receipt->status }}</span></td>
                 <td><a href="{{ route('receipts.show', $receipt->id) }}" class="btn btn-sm btn-outline-primary">View</a></td>
             </tr>

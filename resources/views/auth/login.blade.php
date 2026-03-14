@@ -26,6 +26,10 @@
                             </div>
                             <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold">Sign In</button>
                         </form>
+                        <div class="mt-4 text-center">
+                            <span class="text-muted small">Don't have an account? <a href="{{ route('register') }}" class="text-decoration-none">Sign Up</a></span><br>
+                            <span class="text-muted small"><a href="{{ route('otp.request.form') }}" class="text-decoration-none text-secondary">Forgot Password?</a></span>
+                        </div>
                     </div>
                 </div>
             </div>
