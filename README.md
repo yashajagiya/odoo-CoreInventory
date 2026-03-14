@@ -1,0 +1,2 @@
+# odoo-CoreInventory
+odoo CoreInventory 
